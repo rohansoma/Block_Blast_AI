@@ -69,10 +69,21 @@ gridItems.forEach(item => {
       }
       
       checkAndClearRowsAndColumns();
+      sendData();
       
     }
   });
 });
+
+function sendData(){
+  fetch('/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(gridState)
+  });
+}
 
 function checkAndClearRowsAndColumns() {
   for (let row = 0; row < gridState.length; row++) {
