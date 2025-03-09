@@ -9,19 +9,22 @@ const gridItems = document.querySelectorAll('.grid-item');
 const blocks = document.querySelectorAll('.block');
 let currentBlock = null;
 let draggedBlockCell = null;
-let offsetX = 0;
-let offsetY = 0;
+let draggedBlockCellIndex = {row: 0, col: 0};
 
 blocks.forEach(block => {
   block.addEventListener('dragstart', (e) => {
     currentBlock = block;
     const blockCell = e.target;
-    const blockRect = block.getBoundingClientRect();
-    const blockCellRect = blockCell.getBoundingClientRect();
     draggedBlockCell = blockCell;
-
-    offsetX = Math.floor((blockCellRect.left - blockRect.left) / 52);
-    offsetY = Math.floor((blockCellRect.top - blockRect.top) / 52);
+    const blockCells = Array.from(block.querySelectorAll('.block-cell'));
+    blockCells.forEach((blockCell, index) => {
+      blockCell.addEventListener('mouseenter', () => {
+        draggedBlockCellIndex = {
+          row: Math.floor(index / 3),
+          col: index % 3
+        };
+      });
+    });
   });
 
   block.addEventListener('dragend', () => {
@@ -41,16 +44,67 @@ gridItems.forEach(item => {
     
     if (currentBlock) {
       const blockCells = currentBlock.querySelectorAll('.block-cell');
+      let positions = []
+      let valid = true
 
       blockCells.forEach((blockCell, index) => {
-        const targetRow = row + Math.floor(index / 3) - offsetY;
-        const targetCol = col + (index % 3) - offsetX;
+        const targetRow = row + Math.floor(index / 3) - draggedBlockCellIndex.row;
+        const targetCol = col + (index % 3) - draggedBlockCellIndex.col;
 
-        if (gridState[targetRow] && gridState[targetRow][targetCol] === false) {
-          gridState[targetRow][targetCol] = true;
-          document.getElementById(`cell-${targetRow}-${targetCol}`).style.backgroundColor = '#90ee90';
+        if((gridState[targetRow] && gridState[targetRow][targetCol] === false)){
+          positions.push([targetRow, targetCol])
+        }
+        else{
+          valid = false;
         }
       });
+      
+      if(valid){
+        for(let i of positions){  
+          console.log(i)
+          const [rowValid, colValid] = i;
+          gridState[rowValid][colValid] = true;
+          document.getElementById(`cell-${rowValid}-${colValid}`).style.backgroundColor = '#90ee90';
+        }
+      }
+      
+      checkAndClearRowsAndColumns();
+      
     }
   });
 });
+
+function checkAndClearRowsAndColumns() {
+  for (let row = 0; row < gridState.length; row++) {
+      if (gridState[row].every(cell => cell === true)) {
+          clearRow(row);
+      }
+  }
+
+  for (let col = 0; col < gridState[0].length; col++) {
+      let fullColumn = true;
+      for (let row = 0; row < gridState.length; row++) {
+          if (!gridState[row][col]) {
+              fullColumn = false;
+              break;
+          }
+      }
+      if (fullColumn) {
+          clearColumn(col);
+      }
+  }
+}
+
+function clearRow(row) {
+  for (let col = 0; col < gridState[row].length; col++) {
+      gridState[row][col] = false;
+      document.getElementById(`cell-${row}-${col}`).style.backgroundColor = '';
+  }
+}
+
+function clearColumn(col) {
+  for (let row = 0; row < gridState.length; row++) {
+      gridState[row][col] = false;
+      document.getElementById(`cell-${row}-${col}`).style.backgroundColor = '';
+  }
+}
