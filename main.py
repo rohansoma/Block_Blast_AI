@@ -8,7 +8,7 @@ def index():
 @app.route('/', methods=['POST'])
 def submit():
     data = request.get_json()
-    print(data)
+    # print(data)
     return jsonify({'message': 'Data received successfully'})
 
 if __name__ == '__main__':
