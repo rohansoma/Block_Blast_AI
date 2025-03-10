@@ -11,7 +11,10 @@
         <div>
           <div class="grid-container" id="grid"></div>
           <script>
+            //Creates a variable called grid container and gets the HTML element with the ID Grid
             const gridContainer = document.getElementById("grid");
+            //Creates grid by creating a new div element and adding a class adn id based on index of grid
+            //Then appends to the grid container
             for (let i = 0; i < 8; i++) {
               for(let j = 0; j < 8; j++ ){
                 let cell = document.createElement("div");
