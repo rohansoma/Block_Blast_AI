@@ -1,9 +1,18 @@
 //Gets the HTML element with the ID solve
 const button = document.getElementById('solve');
-//With this button, if it is clicked, set background color to green. TBH could be done in CSS but idk
+//With this button, if it is clicked, set background color to green and changes text.
+let clickStatus = false;
 button.addEventListener('click', function() {
-    button.style.backgroundColor = "#45a049";
-});
+  clickStatus = !clickStatus;
+  if(!clickStatus){
+      button.style.backgroundColor = "#45a049";
+      button.innerHTML = "Solving...";
+    } 
+    else {
+      button.style.backgroundColor = "#313338";
+      button.innerHTML = "Solve";
+    }
+  });
 
 const blockShapes = [
   { id: "block-1", shape: [[1, 1, 1], [0, 1, 0]]},
@@ -150,6 +159,6 @@ function clearColumn(col) {
   }
 }
 
-function createBlocks() {
+function createBlocks(shapeID, ) {
   
 }
