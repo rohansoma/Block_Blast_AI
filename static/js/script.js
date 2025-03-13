@@ -5,6 +5,11 @@ button.addEventListener('click', function() {
     button.style.backgroundColor = "#45a049";
 });
 
+const blockShapes = [
+  { id: "block-1", shape: [[1, 1, 1], [0, 1, 0]]},
+  { id: "block-2", shape: [[1,1], [1,1]]}
+];
+
 /*
   gridState:
   Array(8) initializes an array with 8 elements
@@ -143,4 +148,8 @@ function clearColumn(col) {
       gridState[row][col] = false;
       document.getElementById(`cell-${row}-${col}`).style.backgroundColor = '';
   }
+}
+
+function createBlocks() {
+  
 }
