@@ -1,6 +1,6 @@
 //Gets the HTML element with the ID solve
 const button = document.getElementById('solve');
-//With this button, if it is clicked, set background color to green and changes text.
+//With this button, if it is clicked, set background color to green and changes text
 let clickStatus = false;
 button.addEventListener('click', function() {
   clickStatus = !clickStatus;
