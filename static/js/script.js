@@ -159,6 +159,8 @@ function clearColumn(col) {
   }
 }
 
-function createBlocks(shapeID, ) {
-  
+function createBlocks(shape, blockID) {
+  const block = document.createElement("div");
+  block.classList.add("block");
+  block.id = blockID;
 }

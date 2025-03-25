@@ -1,7 +1,7 @@
-#Block Blast Game
+# Block Blast Game
 
-##Game
+## Game
 Same size as the original block blast game and runs the same
 
-##Solver
+## Solver
 Has a solver on the side that solves the game on a play/pause basis
